@@ -155,10 +155,74 @@ public class VozilaDAOBaza implements VozilaDAO {
         return -1;
     }
 
+    private int dajNajveciIdVlasnika() {
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT max(id) from vlasnik");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return -1;
+    }
+
+    private int dajNajveciIdMjesta() {
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT max(id) from mjesto");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return -1;
+    }
+
+    private void dodajMjesto(Mjesto mjesto) {
+        try {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO mjesto(id, naziv, postanski_broj) VALUES(?,?,?)");
+            stmt.setInt(1, mjesto.getId());
+            stmt.setString(2, mjesto.getNaziv());
+            stmt.setString(3, mjesto.getPostanskiBroj());
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
     @Override
     public void dodajVlasnika(Vlasnik vlasnik) {
-        int noviId = dajNajveciIdVozila() + 1;
-        System.out.println(noviId);
+        if (vlasnik.getMjestoRodjenja().getId() == 0) {
+            vlasnik.getMjestoRodjenja().setId(dajNajveciIdMjesta() + 1);
+            dodajMjesto(vlasnik.getMjestoRodjenja());
+        }
+        if (vlasnik.getMjestoPrebivalista().getId() == 0) {
+            vlasnik.getMjestoPrebivalista().setId(dajNajveciIdMjesta() + 1);
+            dodajMjesto(vlasnik.getMjestoPrebivalista());
+        }
+        vlasnik.setId(dajNajveciIdVlasnika()+1);
+        try {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO vlasnik(id, ime, prezime, " +
+                    "ime_roditelja, datum_rodjenja, mjesto_rodjenja, adresa_prebivalista, mjesto_prebivalista," +
+                    "jmbg) VALUES(?,?,?,?,?,?,?,?,?)");
+            stmt.setInt(1, vlasnik.getId());
+            stmt.setString(2, vlasnik.getIme());
+            stmt.setString(3, vlasnik.getPrezime());
+            stmt.setString(4, vlasnik.getImeRoditelja());
+            stmt.setString(5, String.valueOf(vlasnik.getDatumRodjenja().atStartOfDay(
+                    ZoneId.systemDefault()).toEpochSecond()));
+            stmt.setInt(6, vlasnik.getMjestoRodjenja().getId());
+            stmt.setString(7, vlasnik.getAdresaPrebivalista());
+            stmt.setInt(8, vlasnik.getMjestoPrebivalista().getId());
+            stmt.setString(9, vlasnik.getJmbg());
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
 
     }
 
