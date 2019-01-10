@@ -14,16 +14,19 @@ public class Vlasnik {
     private Mjesto mjestoPrebivalista;
     private String jmbg;
 
+    private long datumRodjenjaDani;
+
     public Vlasnik() {
         this.id = 0;
         this.ime = "";
         this.prezime = "";
         this.imeRoditelja = "";
-        this.datumRodjenja = LocalDate.now();
+        this.datumRodjenja = LocalDate.of(1970,1,2);
         this.mjestoRodjenja = null;
         this.adresaPrebivalista = "";
         this.mjestoPrebivalista = null;
         this.jmbg = "";
+        this.datumRodjenjaDani = 1;
     }
 
 
@@ -110,5 +113,14 @@ public class Vlasnik {
 
     public void setJmbg(String jmbg) {
         this.jmbg = jmbg;
+    }
+
+    public long getDatumRodjenjaDani() {
+        return datumRodjenjaDani;
+    }
+
+    public void setDatumRodjenjaDani(long datumRodjenjaDani) {
+        this.datumRodjenjaDani = datumRodjenjaDani;
+        this.datumRodjenja = LocalDate.ofEpochDay(datumRodjenjaDani);
     }
 }
