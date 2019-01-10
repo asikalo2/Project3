@@ -228,6 +228,37 @@ public class VozilaDAOBaza implements VozilaDAO {
 
     @Override
     public void promijeniVlasnika(Vlasnik vlasnik) {
+        try {
+
+            if (vlasnik.getMjestoRodjenja().getId() == 0) {
+                vlasnik.getMjestoRodjenja().setId(dajNajveciIdMjesta() + 1);
+                dodajMjesto(vlasnik.getMjestoRodjenja());
+            }
+
+            if (vlasnik.getMjestoPrebivalista().getId() == 0) {
+                vlasnik.getMjestoPrebivalista().setId(dajNajveciIdMjesta() + 1);
+                dodajMjesto(vlasnik.getMjestoPrebivalista());
+            }
+
+            PreparedStatement stmt = conn.prepareStatement("UPDATE vlasnik SET ime=?, prezime=?, " +
+                    "ime_roditelja=?, datum_rodjenja=?, mjesto_rodjenja=?, adresa_prebivalista=?, mjesto_prebivalista=?," +
+                    "jmbg=? WHERE id=?");
+            stmt.setString(1, vlasnik.getIme());
+            stmt.setString(2, vlasnik.getPrezime());
+            stmt.setString(3, vlasnik.getImeRoditelja());
+            stmt.setString(4, String.valueOf(vlasnik.getDatumRodjenja().atStartOfDay(
+                    ZoneId.systemDefault()).toEpochSecond()));
+            stmt.setInt(5, vlasnik.getMjestoRodjenja().getId());
+            stmt.setString(6, vlasnik.getAdresaPrebivalista());
+            stmt.setInt(7, vlasnik.getMjestoPrebivalista().getId());
+            stmt.setString(8, vlasnik.getJmbg());
+            stmt.setInt(9, vlasnik.getId());
+
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
 
     }
 
