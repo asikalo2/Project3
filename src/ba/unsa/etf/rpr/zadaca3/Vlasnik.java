@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.zadaca3;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Vlasnik {
@@ -8,14 +9,14 @@ public class Vlasnik {
     private String ime;
     private String prezime;
     private String imeRoditelja;
-    private Date datumRodjenja;
+    private LocalDate datumRodjenja;
     private Mjesto mjestoRodjenja;
     private String adresaPrebivalista;
     private Mjesto mjestoPrebivalista;
     private String jmbg;
 
 
-    public Vlasnik(Integer id, String ime, String prezime, String imeRoditelja, Date datumRodjenja,
+    public Vlasnik(Integer id, String ime, String prezime, String imeRoditelja, LocalDate datumRodjenja,
                    Mjesto mjestoRodjenja, String adresaPrebivalista, Mjesto mjestoPrebivalista, String jmbg) {
         this.id = id;
         this.ime = ime;
@@ -60,11 +61,11 @@ public class Vlasnik {
         this.imeRoditelja = imeRoditelja;
     }
 
-    public Date getDatumRodjenja() {
+    public LocalDate getDatumRodjenja() {
         return datumRodjenja;
     }
 
-    public void setDatumRodjenja(Date datumRodjenja) {
+    public void setDatumRodjenja(LocalDate datumRodjenja) {
         this.datumRodjenja = datumRodjenja;
     }
 
