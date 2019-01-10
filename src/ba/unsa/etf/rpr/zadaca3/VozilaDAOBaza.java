@@ -342,6 +342,13 @@ public class VozilaDAOBaza implements VozilaDAO {
 
     @Override
     public void obrisiVozilo(Vozilo vozilo) {
+        try {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM vozilo WHERE id=?");
+            stmt.setInt(1, vozilo.getId());
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
 
     }
 
