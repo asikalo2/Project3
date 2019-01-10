@@ -2,21 +2,21 @@ package ba.unsa.etf.rpr.zadaca3;
 
 public class Mjesto {
 
-    private Integer id;
+    private int id;
     private String naziv;
     private String postanskiBroj;
 
-    public Mjesto(Integer id, String naziv, String postanskiBroj) {
+    public Mjesto(int id, String naziv, String postanskiBroj) {
         this.id = id;
         this.naziv = naziv;
         this.postanskiBroj = postanskiBroj;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

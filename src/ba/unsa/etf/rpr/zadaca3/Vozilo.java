@@ -2,14 +2,14 @@ package ba.unsa.etf.rpr.zadaca3;
 
 public class Vozilo {
 
-    private Integer id;
+    private int id;
     private Proizvodjac proizvodjac;
     private String model;
     private String brojSasije;
     private String brojTablica;
     private Vlasnik vlasnik;
 
-    public Vozilo(Integer id, Proizvodjac proizvodjac, String model, String brojSasije, String brojTablica, Vlasnik vlasnik) {
+    public Vozilo(int id, Proizvodjac proizvodjac, String model, String brojSasije, String brojTablica, Vlasnik vlasnik) {
         this.id = id;
         this.proizvodjac = proizvodjac;
         this.model = model;
@@ -18,11 +18,11 @@ public class Vozilo {
         this.vlasnik = vlasnik;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

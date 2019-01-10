@@ -2,20 +2,20 @@ package ba.unsa.etf.rpr.zadaca3;
 
 public class Proizvodjac {
 
-    private Integer id;
+    private int id;
     private String naziv;
 
 
-    public Proizvodjac(Integer id, String naziv) {
+    public Proizvodjac(int id, String naziv) {
         this.id = id;
         this.naziv = naziv;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
