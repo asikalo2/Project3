@@ -1,18 +1,11 @@
 package ba.unsa.etf.rpr.zadaca3;
 
 import javafx.collections.ObservableList;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
