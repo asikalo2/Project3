@@ -227,9 +227,11 @@ class VozilaDAOBazaTest {
         // Da li se hyundai zaista dodao u listu proizvođača?
         ObservableList<Proizvodjac> proizvodjaci = dao.getProizvodjaci();
         assertEquals(4, proizvodjaci.size());
-        assertEquals("Hyundai", proizvodjaci.get(3).getNaziv());
+        // ISPRAVKA TESTA: PROIZVODJACI SE ABECEDNO SORTIRAJU OD Z-A
+        // ZBOG TESTA METDODE getProizvodjaci() A NE PO ID-u
+        assertEquals("Hyundai", proizvodjaci.get(2).getNaziv());
         // Trebao bi dobiti Id 4
-        assertEquals(4, proizvodjaci.get(3).getId());
+        assertEquals(4, proizvodjaci.get(2).getId());
     }
 
     @Test
@@ -251,9 +253,9 @@ class VozilaDAOBazaTest {
         // Da li se hyundai zaista dodao u listu proizvođača?
         ObservableList<Proizvodjac> proizvodjaci = dao.getProizvodjaci();
         assertEquals(4, proizvodjaci.size());
-        assertEquals("Hyundai", proizvodjaci.get(3).getNaziv());
+        assertEquals("Hyundai", proizvodjaci.get(2).getNaziv());
         // Trebao bi dobiti Id 4
-        assertEquals(4, proizvodjaci.get(3).getId());
+        assertEquals(4, proizvodjaci.get(2).getId());
     }
 
     @Test

@@ -181,6 +181,19 @@ public class VozilaDAOBaza implements VozilaDAO {
         return -1;
     }
 
+    private int dajNajveciIdProizvodjac() {
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT max(id) from proizvodjac");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return -1;
+    }
+
     private void dodajMjesto(Mjesto mjesto) {
         try {
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO mjesto(id, naziv, postanski_broj) VALUES(?,?,?)");
@@ -262,6 +275,21 @@ public class VozilaDAOBaza implements VozilaDAO {
 
     }
 
+    private Boolean daLiPostojiVlasnik(int id) {
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT id=? from vlasnik WHERE id=?");
+            stmt.setInt(1, id);
+            stmt.setInt(2, id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
     @Override
     public void obrisiVlasnika(Vlasnik vlasnik) {
 
@@ -269,8 +297,42 @@ public class VozilaDAOBaza implements VozilaDAO {
 
     @Override
     public void dodajVozilo(Vozilo vozilo) {
+        if (!daLiPostojiVlasnik(vozilo.getVlasnik().getId())) {
+            throw new IllegalArgumentException("Ne postoji vlasnik!");
+        }
+        if (vozilo.getId() == 0) {
+            vozilo.setId(dajNajveciIdVozila()+1);
+        }
+        if (vozilo.getProizvodjac().getId() == 0) {
+            vozilo.getProizvodjac().setId(dajNajveciIdProizvodjac()+1);
+            dodajProizvodjac(vozilo.getProizvodjac());
+        }
+        try {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO vozilo(id, proizvodjac, model, " +
+                    "broj_sasije, broj_tablica, vlasnik) VALUES(?,?,?,?,?,?)");
+            stmt.setInt(1, vozilo.getId());
+            stmt.setInt(2, vozilo.getProizvodjac().getId());
+            stmt.setString(3, vozilo.getModel());
+            stmt.setString(4, vozilo.getBrojSasije());
+            stmt.setString(5, vozilo.getBrojTablica());
+            stmt.setInt(6, vozilo.getVlasnik().getId());
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
 
 
+    }
+
+    private void dodajProizvodjac(Proizvodjac proizvodjac) {
+        try {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO proizvodjac(id, naziv) VALUES(?,?)");
+            stmt.setInt(1, proizvodjac.getId());
+            stmt.setString(2, proizvodjac.getNaziv());
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
