@@ -277,9 +277,8 @@ public class VozilaDAOBaza implements VozilaDAO {
 
     private Boolean daLiPostojiVlasnik(int id) {
         try {
-            PreparedStatement stmt = conn.prepareStatement("SELECT id=? from vlasnik WHERE id=?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT id from vlasnik WHERE id=?");
             stmt.setInt(1, id);
-            stmt.setInt(2, id);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 return true;
@@ -292,7 +291,31 @@ public class VozilaDAOBaza implements VozilaDAO {
 
     @Override
     public void obrisiVlasnika(Vlasnik vlasnik) {
+        if (daLiPosjedujeVozilo(vlasnik)) {
+            throw new IllegalArgumentException("Vlasnik posjeduje vozilo!");
+        }
 
+        try {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM vlasnik WHERE id=?");
+            stmt.setInt(1, vlasnik.getId());
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private boolean daLiPosjedujeVozilo(Vlasnik vlasnik) {
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT id from vozilo WHERE vlasnik=?");
+            stmt.setInt(1, vlasnik.getId());
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 
     @Override
@@ -337,6 +360,27 @@ public class VozilaDAOBaza implements VozilaDAO {
 
     @Override
     public void promijeniVozilo(Vozilo vozilo) {
+        try {
+            if (vozilo.getProizvodjac().getId() == 0) {
+                vozilo.getProizvodjac().setId(dajNajveciIdProizvodjac()+1);
+                dodajProizvodjac(vozilo.getProizvodjac());
+            }
+
+            PreparedStatement stmt = conn.prepareStatement("UPDATE vozilo SET id=?, proizvodjac=?, model=?, " +
+                    "broj_sasije=?, broj_tablica=?, vlasnik=? WHERE id=?");
+
+            stmt.setInt(1, vozilo.getId());
+            stmt.setInt(2, vozilo.getProizvodjac().getId());
+            stmt.setString(3, vozilo.getModel());
+            stmt.setString(4, vozilo.getBrojSasije());
+            stmt.setString(5, vozilo.getBrojTablica());
+            stmt.setInt(6, vozilo.getVlasnik().getId());
+            stmt.setInt(7, vozilo.getId());
+
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
 
     }
 
