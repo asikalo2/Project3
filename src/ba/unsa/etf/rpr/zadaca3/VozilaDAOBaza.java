@@ -142,8 +142,23 @@ public class VozilaDAOBaza implements VozilaDAO {
         return null;
     }
 
+    private int dajNajveciIdVozila() {
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT max(id) from vozilo");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return -1;
+    }
+
     @Override
     public void dodajVlasnika(Vlasnik vlasnik) {
+        int noviId = dajNajveciIdVozila() + 1;
+        System.out.println(noviId);
 
     }
 
@@ -159,6 +174,7 @@ public class VozilaDAOBaza implements VozilaDAO {
 
     @Override
     public void dodajVozilo(Vozilo vozilo) {
+
 
     }
 
