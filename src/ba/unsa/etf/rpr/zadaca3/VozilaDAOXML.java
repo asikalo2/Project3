@@ -1,10 +1,27 @@
 package ba.unsa.etf.rpr.zadaca3;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.beans.XMLDecoder;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 public class VozilaDAOXML implements VozilaDAO {
+
     @Override
     public ObservableList<Vlasnik> getVlasnici() {
+        try {
+            FileInputStream fis = new FileInputStream("vlasnici.xml");
+            BufferedInputStream bis = new BufferedInputStream(fis);
+            XMLDecoder xmlDecoder = new XMLDecoder(bis);
+            return null;
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
         return null;
     }
 
@@ -20,6 +37,18 @@ public class VozilaDAOXML implements VozilaDAO {
 
     @Override
     public ObservableList<Proizvodjac> getProizvodjaci() {
+        try {
+            FileInputStream fis = new FileInputStream(getClass().getClassLoader().getResource(
+                    "xml/proizvodjaci.xml").getFile());
+            BufferedInputStream bis = new BufferedInputStream(fis);
+            XMLDecoder xmlDecoder = new XMLDecoder(bis);
+            Object proizvodjaci = (Object) xmlDecoder.readObject();
+            xmlDecoder.close();
+            return null;
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
         return null;
     }
 
@@ -55,6 +84,7 @@ public class VozilaDAOXML implements VozilaDAO {
 
     @Override
     public void close() {
+
 
     }
 }
