@@ -6,6 +6,12 @@ public class Mjesto {
     private String naziv;
     private String postanskiBroj;
 
+    public Mjesto() {
+        this.id = 0;
+        this.naziv = "";
+        this.postanskiBroj = "";
+    }
+
     public Mjesto(int id, String naziv, String postanskiBroj) {
         this.id = id;
         this.naziv = naziv;

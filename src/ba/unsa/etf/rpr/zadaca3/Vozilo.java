@@ -9,6 +9,15 @@ public class Vozilo {
     private String brojTablica;
     private Vlasnik vlasnik;
 
+    public Vozilo() {
+        this.id = 0;
+        this.proizvodjac = null;
+        this.model = "";
+        this.brojSasije = "";
+        this.brojTablica = "";
+        this.vlasnik = null;
+    }
+
     public Vozilo(int id, Proizvodjac proizvodjac, String model, String brojSasije, String brojTablica, Vlasnik vlasnik) {
         this.id = id;
         this.proizvodjac = proizvodjac;

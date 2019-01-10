@@ -5,6 +5,10 @@ public class Proizvodjac {
     private int id;
     private String naziv;
 
+    public Proizvodjac() {
+        this.id = 0;
+        this.naziv = "";
+    }
 
     public Proizvodjac(int id, String naziv) {
         this.id = id;

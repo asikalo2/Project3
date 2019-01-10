@@ -14,6 +14,18 @@ public class Vlasnik {
     private Mjesto mjestoPrebivalista;
     private String jmbg;
 
+    public Vlasnik() {
+        this.id = 0;
+        this.ime = "";
+        this.prezime = "";
+        this.imeRoditelja = "";
+        this.datumRodjenja = LocalDate.now();
+        this.mjestoRodjenja = null;
+        this.adresaPrebivalista = "";
+        this.mjestoPrebivalista = null;
+        this.jmbg = "";
+    }
+
 
     public Vlasnik(int id, String ime, String prezime, String imeRoditelja, LocalDate datumRodjenja,
                    Mjesto mjestoRodjenja, String adresaPrebivalista, Mjesto mjestoPrebivalista, String jmbg) {

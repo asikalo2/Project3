@@ -42,7 +42,7 @@ public class VozilaDAOXML implements VozilaDAO {
                     "xml/proizvodjaci.xml").getFile());
             BufferedInputStream bis = new BufferedInputStream(fis);
             XMLDecoder xmlDecoder = new XMLDecoder(bis);
-            Object proizvodjaci = (Object) xmlDecoder.readObject();
+            ArrayList proizvodjaci = (ArrayList) xmlDecoder.readObject();
             xmlDecoder.close();
             return null;
         }
