@@ -27,9 +27,15 @@ public class Controller implements Initializable {
     private VozilaDAO dao;
 
     public void postaviSQLite(ActionEvent actionEvent) {
+        dao = new VozilaDAOBaza();
+        napuniTabeluVlasnici();
+        napuniTabeluVozila();
     }
 
     public void postaviXML(ActionEvent actionEvent) {
+        dao = new VozilaDAOXML();
+        napuniTabeluVlasnici();
+        napuniTabeluVozila();
     }
 
     @Override
@@ -60,5 +66,14 @@ public class Controller implements Initializable {
         jmbgColumn.setCellValueFactory(new PropertyValueFactory("jmbg"));
 
         tabelaVlasnici.setItems(listaVlasnika);
+    }
+
+    public void addVlasnik(ActionEvent actionEvent) {
+    }
+
+    public void removeVlasnik(ActionEvent actionEvent) {
+    }
+
+    public void editVlasnik(ActionEvent actionEvent) {
     }
 }

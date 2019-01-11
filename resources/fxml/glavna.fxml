@@ -31,9 +31,22 @@
             </Menu>
         </menus>
     </MenuBar>
+
     <TabPane maxWidth="Infinity" maxHeight="Infinity">
+
         <tabs>
             <Tab text="Vlasnici" fx:id="vlasniciTab">
+                <VBox>
+                <ToolBar>
+                    <items>
+                        <Region styleClass="spacer" />
+                        <HBox styleClass="segmented-button-bar">
+                            <Button fx:id="tbAddVlasnik" onAction="#addVlasnik" minWidth="50" styleClass="first" />
+                            <Button fx:id="tbRemoveVlasnik" onAction="#removeVlasnik" minWidth="50" />
+                            <Button fx:id="tbEditVlasnik" onAction="#editVlasnik" minWidth="50" styleClass="last" />
+                        </HBox>
+                    </items>
+                </ToolBar>
                 <TableView fx:id="tabelaVlasnici" style="-fx-aligmnent: CENTER;">
                     <columns>
                         <TableColumn fx:id="idColumn" prefWidth="50.0" text="Id"/>
@@ -42,7 +55,7 @@
                         <TableColumn fx:id="jmbgColumn" prefWidth="200.0" text="JMBG"/>
                     </columns>
                 </TableView>
-
+                </VBox>
             </Tab>
             <Tab text="Vozila" fx:id="vozilaTab">
                 <TableView fx:id="tabelaVozilo" style="-fx-aligmnent: CENTER;">
