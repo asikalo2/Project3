@@ -6,9 +6,55 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="ba.unsa.etf.rpr.zadaca3.Controller"
-            prefHeight="400.0" prefWidth="600.0">
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<VBox maxHeight="Infinity" minHeight="Infinity" xmlns="http://javafx.com/javafx/8.0.172-ea"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ba.unsa.etf.rpr.zadaca3.Controller">
 
-</AnchorPane>
+    <stylesheets>
+        <URL value="@../css/style.css"/>
+    </stylesheets>
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+    <fx:define>
+        <ToggleGroup fx:id="toggleGroup1"/>
+    </fx:define>
+    <MenuBar fx:id="menuBar">
+        <menus>
+            <Menu text="Opcije" fx:id="menuOpcije">
+                <items>
+                    <RadioMenuItem onAction="#postaviSQLite" text="SQLite" fx:id="menuDb" toggleGroup="$toggleGroup1"/>
+                    <RadioMenuItem onAction="#postaviXML" text="XML" fx:id="menuXml" toggleGroup="$toggleGroup1"/>
+                </items>
+            </Menu>
+        </menus>
+    </MenuBar>
+    <TabPane maxWidth="Infinity" maxHeight="Infinity">
+        <tabs>
+            <Tab text="Vlasnici" fx:id="vlasniciTab">
+                <TableView fx:id="tableVlasnici" style="-fx-aligmnent: CENTER;">
+                    <columns>
+                        <TableColumn fx:id="idColumn" prefWidth="50.0" text="Id"/>
+                        <TableColumn fx:id="imeColumn" prefWidth="180.0" text="Ime"/>
+                        <TableColumn fx:id="prezimeColumn" prefWidth="250.0" text="Prezime"/>
+                        <TableColumn fx:id="jmbgColumn" prefWidth="200.0" text="JMBG"/>
+                    </columns>
+                </TableView>
+
+            </Tab>
+            <Tab text="Vozila" fx:id="vozilaTab">
+                <TableView fx:id="tableVozilo" style="-fx-aligmnent: CENTER;">
+                    <columns>
+                        <TableColumn fx:id="idColumn1" prefWidth="50.0" text="Id"/>
+                        <TableColumn fx:id="nazivProizvodjacaColumn1" prefWidth="180.0" text="Naziv Proizvodjaca"/>
+                        <TableColumn fx:id="nazivModela1" prefWidth="200.0" text="Model"/>
+                        <TableColumn fx:id="brojSasijeColumn1" prefWidth="150.0" text="Broj Sasije"/>
+                        <TableColumn fx:id="brojRegColumn1" prefWidth="150.0" text="Registracija"/>
+                    </columns>
+                </TableView>
+            </Tab>
+        </tabs>
+    </TabPane>
+</VBox>
