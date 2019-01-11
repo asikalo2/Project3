@@ -41,4 +41,9 @@ public class Mjesto {
     public void setPostanskiBroj(String postanskiBroj) {
         this.postanskiBroj = postanskiBroj;
     }
+
+    @Override
+    public String toString() {
+        return this.getNaziv();
+    }
 }

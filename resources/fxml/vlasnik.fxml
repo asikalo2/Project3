@@ -6,9 +6,90 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="ba.unsa.etf.rpr.zadaca3.VlasnikController"
-            prefHeight="400.0" prefWidth="600.0">
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<GridPane alignment="CENTER" vgap="4" hgap="4"
+          xmlns="http://javafx.com/javafx/8.0.172-ea"
+          xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@../css/style.css"/>
+    </stylesheets>
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+    <columnConstraints>
+        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" percentWidth="50"/>
+        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" percentWidth="50"/>
+    </columnConstraints>
+    <rowConstraints>
+        <!--<RowConstraints percentHeight="20" vgrow="ALWAYS"/>
+        <RowConstraints percentHeight="20" vgrow="ALWAYS"/>
+        <RowConstraints percentHeight="20" vgrow="ALWAYS"/>
+        <RowConstraints percentHeight="20" vgrow="ALWAYS"/>
+        <RowConstraints percentHeight="20" vgrow="ALWAYS"/>-->
+    </rowConstraints>
+    <children>
 
-</AnchorPane>
+        <Label fx:id="imeLabel" GridPane.rowIndex="1" GridPane.columnIndex="0"
+               maxHeight="Infinity" maxWidth="Infinity" text="Ime:"/>
+
+        <TextField fx:id="imeField" GridPane.rowIndex="1" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+        <Label fx:id="prezimeLabel" GridPane.rowIndex="2" GridPane.columnIndex="0"
+               maxHeight="Infinity" maxWidth="Infinity" text="Prezime:"/>
+
+        <TextField fx:id="prezimeField" GridPane.rowIndex="2" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+        <Label fx:id="imeRoditeljaLabel" GridPane.rowIndex="3" GridPane.columnIndex="0"
+               maxHeight="Infinity" maxWidth="Infinity" text="Ime Roditelja:"/>
+
+        <TextField fx:id="imeRoditeljaField" GridPane.rowIndex="3" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+        <Label fx:id="adresaPrebivalistaLabel" GridPane.rowIndex="4" GridPane.columnIndex="0"
+               maxHeight="Infinity" maxWidth="Infinity" text="Adresa Prebivalista:"/>
+
+        <TextField fx:id="adresaPrebivalistaField" GridPane.rowIndex="4" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+        <Label fx:id="jmbgLabel" GridPane.rowIndex="5" GridPane.columnIndex="0"
+               maxHeight="Infinity" maxWidth="Infinity" text="Adresa Prebivalista:"/>
+
+        <TextField fx:id="jmbgField" GridPane.rowIndex="5" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+        <Label fx:id="datumLabel" GridPane.rowIndex="6" GridPane.columnIndex="0"
+               maxHeight="Infinity" maxWidth="Infinity" text="Datum rodjenja:"/>
+
+        <DatePicker fx:id="datumField" GridPane.rowIndex="6" GridPane.columnIndex="1"
+                    maxWidth="Infinity"/>
+
+        <Label fx:id="mjestoRodjenjaLabel" GridPane.rowIndex="7" GridPane.columnIndex="0"
+               maxHeight="Infinity" maxWidth="Infinity" text="Mjesto rodjenja:"/>
+
+        <ComboBox fx:id="mjestoRodjenja" GridPane.rowIndex="7" GridPane.columnIndex="1" editable="true"
+                  maxWidth="Infinity">
+        </ComboBox>
+
+        <Label fx:id="adresaMjestoLabel" GridPane.rowIndex="8" GridPane.columnIndex="0"
+               maxHeight="Infinity" maxWidth="Infinity" text="Mjesto prebivalista:"/>
+
+        <ComboBox fx:id="adresaMjesto" GridPane.rowIndex="8" GridPane.columnIndex="1" editable="true"
+                  maxWidth="Infinity" />
+
+        <Label fx:id="pbLabel" GridPane.rowIndex="9" GridPane.columnIndex="0"
+               maxHeight="Infinity" maxWidth="Infinity" text="Postanski broj:"/>
+
+        <TextField fx:id="postanskiBrojField" GridPane.rowIndex="9" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+        <ButtonBar GridPane.rowIndex="10" GridPane.columnSpan="2">
+            <GridPane.margin>
+                <Insets top="25"/>
+            </GridPane.margin>
+            <buttons>
+                <Button text="OK" fx:id="okButton" ButtonBar.buttonData="RIGHT"/>
+                <Button text="Prekini" fx:id="cancelButton" ButtonBar.buttonData="LEFT" />
+            </buttons>
+        </ButtonBar>
+
+    </children>
+</GridPane>
+
+

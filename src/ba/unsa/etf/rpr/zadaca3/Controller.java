@@ -3,11 +3,15 @@ package ba.unsa.etf.rpr.zadaca3;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -75,5 +79,25 @@ public class Controller implements Initializable {
     }
 
     public void editVlasnik(ActionEvent actionEvent) {
+        if (tabelaVlasnici.getSelectionModel().getSelectedItems() == null)
+            return;
+        Vlasnik vlasnik = (Vlasnik) tabelaVlasnici.getSelectionModel().getSelectedItem();
+        System.out.println(vlasnik.getIme());
+
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            VlasnikController vlasnikController = new VlasnikController(dao, vlasnik);
+            loader.setController(vlasnikController);
+            loader.setLocation(getClass().getResource("/fxml/vlasnik.fxml"));
+            Scene scene = new Scene(loader.load(), 600, 400);
+            Stage stage = new Stage();
+            stage.setTitle("Vlasnik");
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
     }
 }
