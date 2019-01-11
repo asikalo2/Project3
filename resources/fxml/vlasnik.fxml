@@ -48,7 +48,8 @@
         <Label fx:id="adresaPrebivalistaLabel" GridPane.rowIndex="4" GridPane.columnIndex="0"
                maxHeight="Infinity" maxWidth="Infinity" text="Adresa Prebivalista:"/>
 
-        <TextField fx:id="adresaPrebivalistaField" GridPane.rowIndex="4" GridPane.columnIndex="1" maxWidth="Infinity"/>
+        <TextField fx:id="adresaPrebivalistaField" GridPane.rowIndex="4" GridPane.columnIndex="1"
+                   maxWidth="Infinity"/>
 
         <Label fx:id="jmbgLabel" GridPane.rowIndex="5" GridPane.columnIndex="0"
                maxHeight="Infinity" maxWidth="Infinity" text="Adresa Prebivalista:"/>

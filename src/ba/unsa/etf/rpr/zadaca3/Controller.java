@@ -73,6 +73,20 @@ public class Controller implements Initializable {
     }
 
     public void addVlasnik(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            VlasnikController vlasnikController = new VlasnikController(dao, null);
+            loader.setController(vlasnikController);
+            loader.setLocation(getClass().getResource("/fxml/vlasnik.fxml"));
+            Scene scene = new Scene(loader.load(), 600, 400);
+            Stage stage = new Stage();
+            stage.setTitle("Vlasnik");
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void removeVlasnik(ActionEvent actionEvent) {
