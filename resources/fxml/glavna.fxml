@@ -34,7 +34,7 @@
     <TabPane maxWidth="Infinity" maxHeight="Infinity">
         <tabs>
             <Tab text="Vlasnici" fx:id="vlasniciTab">
-                <TableView fx:id="tableVlasnici" style="-fx-aligmnent: CENTER;">
+                <TableView fx:id="tabelaVlasnici" style="-fx-aligmnent: CENTER;">
                     <columns>
                         <TableColumn fx:id="idColumn" prefWidth="50.0" text="Id"/>
                         <TableColumn fx:id="imeColumn" prefWidth="180.0" text="Ime"/>
@@ -45,7 +45,7 @@
 
             </Tab>
             <Tab text="Vozila" fx:id="vozilaTab">
-                <TableView fx:id="tableVozilo" style="-fx-aligmnent: CENTER;">
+                <TableView fx:id="tabelaVozilo" style="-fx-aligmnent: CENTER;">
                     <columns>
                         <TableColumn fx:id="idColumn1" prefWidth="50.0" text="Id"/>
                         <TableColumn fx:id="nazivProizvodjacaColumn1" prefWidth="180.0" text="Naziv Proizvodjaca"/>

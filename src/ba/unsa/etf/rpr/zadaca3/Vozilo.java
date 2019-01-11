@@ -9,6 +9,8 @@ public class Vozilo {
     private String brojTablica;
     private Vlasnik vlasnik;
 
+    private String nazivProizvodjaca;
+
     public Vozilo() {
         this.id = 0;
         this.proizvodjac = null;
@@ -73,5 +75,9 @@ public class Vozilo {
 
     public void setVlasnik(Vlasnik vlasnik) {
         this.vlasnik = vlasnik;
+    }
+
+    public String getNazivProizvodjaca() {
+        return proizvodjac.getNaziv();
     }
 }
