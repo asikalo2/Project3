@@ -15,8 +15,7 @@ public class VozilaDAOXML implements VozilaDAO {
     private void ispisiVlasniciXML(ArrayList<Vlasnik> lista) {
         XMLEncoder encoder=null;
         try{
-            encoder=new XMLEncoder(new BufferedOutputStream(new FileOutputStream(getClass().getClassLoader().getResource(
-                    "vlasnici.xml").getFile())));
+            encoder=new XMLEncoder(new BufferedOutputStream(new FileOutputStream("vlasnici.xml")));
         }
         catch(FileNotFoundException ex){
             ex.printStackTrace();
@@ -28,8 +27,7 @@ public class VozilaDAOXML implements VozilaDAO {
     @Override
     public ObservableList<Vlasnik> getVlasnici() {
         try {
-            FileInputStream fis = new FileInputStream(getClass().getClassLoader().getResource(
-                    "xml/vlasnici.xml").getFile());
+            FileInputStream fis = new FileInputStream("vlasnici.xml");
             BufferedInputStream bis = new BufferedInputStream(fis);
             XMLDecoder xmlDecoder = new XMLDecoder(bis);
             ArrayList<Vlasnik> vlasnici = (ArrayList<Vlasnik>) xmlDecoder.readObject();
@@ -44,8 +42,7 @@ public class VozilaDAOXML implements VozilaDAO {
     @Override
     public ObservableList<Vozilo> getVozila() {
         try {
-            FileInputStream fis = new FileInputStream(getClass().getClassLoader().getResource(
-                    "xml/vozila.xml").getFile());
+            FileInputStream fis = new FileInputStream("vozila.xml");
             BufferedInputStream bis = new BufferedInputStream(fis);
             XMLDecoder xmlDecoder = new XMLDecoder(bis);
             ArrayList<Vozilo> vozila = (ArrayList<Vozilo>) xmlDecoder.readObject();
@@ -60,8 +57,7 @@ public class VozilaDAOXML implements VozilaDAO {
     @Override
     public ObservableList<Mjesto> getMjesta() {
         try {
-            FileInputStream fis = new FileInputStream(getClass().getClassLoader().getResource(
-                    "xml/mjesta.xml").getFile());
+            FileInputStream fis = new FileInputStream("mjesta.xml");
             BufferedInputStream bis = new BufferedInputStream(fis);
             XMLDecoder xmlDecoder = new XMLDecoder(bis);
             ArrayList<Mjesto> mjesta = (ArrayList<Mjesto>) xmlDecoder.readObject();
@@ -77,8 +73,7 @@ public class VozilaDAOXML implements VozilaDAO {
     @Override
     public ObservableList<Proizvodjac> getProizvodjaci() {
         try {
-            FileInputStream fis = new FileInputStream(getClass().getClassLoader().getResource(
-                    "xml/proizvodjaci.xml").getFile());
+            FileInputStream fis = new FileInputStream("proizvodjaci.xml");
             BufferedInputStream bis = new BufferedInputStream(fis);
             XMLDecoder xmlDecoder = new XMLDecoder(bis);
             ArrayList<Proizvodjac> proizvodjaci = (ArrayList<Proizvodjac>) xmlDecoder.readObject();
@@ -132,8 +127,7 @@ public class VozilaDAOXML implements VozilaDAO {
     private void ispisiMjestaXML(ArrayList<Mjesto> lista) {
         XMLEncoder encoder=null;
         try{
-            encoder=new XMLEncoder(new BufferedOutputStream(new FileOutputStream(getClass().getClassLoader().getResource(
-                    "xml/mjesta.xml").getFile())));
+            encoder=new XMLEncoder(new BufferedOutputStream(new FileOutputStream("mjesta.xml")));
         }
         catch(FileNotFoundException ex){
             ex.printStackTrace();
@@ -144,32 +138,162 @@ public class VozilaDAOXML implements VozilaDAO {
 
     @Override
     public void promijeniVlasnika(Vlasnik vlasnik) {
+        ObservableList<Vlasnik> vlasnici = getVlasnici();
+        if (vlasnik.getMjestoRodjenja().getId() == 0) {
+            int id = dodajMjesto(vlasnik.getMjestoRodjenja());
+            vlasnik.getMjestoRodjenja().setId(id);
+        }
+        if (vlasnik.getMjestoPrebivalista().getId() == 0) {
+            int id = dodajMjesto(vlasnik.getMjestoPrebivalista());
+            vlasnik.getMjestoPrebivalista().setId(id);
+        }
+        for (Vlasnik v: vlasnici) {
+            if (v.getId() == vlasnik.getId())
+                vlasnici.set(vlasnici.indexOf(v), vlasnik);
+        }
+        ArrayList<Vlasnik> temp = new ArrayList<Vlasnik>(vlasnici);
+        ispisiVlasniciXML(temp);
 
     }
 
     @Override
     public void obrisiVlasnika(Vlasnik vlasnik) {
+        if (daLiPosjedujeVozilo(vlasnik)) {
+            throw new IllegalArgumentException("Vlasnik posjeduje vozilo!");
+        }
+        ObservableList<Vlasnik> vlasnici = getVlasnici();
+        ArrayList<Vlasnik> temp = new ArrayList<Vlasnik>(vlasnici);
+        int i = 0;
+        for (Vlasnik v : temp) {
+            if(v.getId() == vlasnik.getId()) {
+                temp.remove(i);
+                break;
+            }
+            i++;
+        }
+        ispisiVlasniciXML(temp);
 
+
+    }
+
+    private boolean daLiPosjedujeVozilo(Vlasnik vlasnik) {
+        ObservableList<Vozilo> vozila = getVozila();
+        for(Vozilo v : vozila) {
+            if (v.getVlasnik().getId() == vlasnik.getId())
+                return true;
+        }
+        return false;
     }
 
     @Override
     public void dodajVozilo(Vozilo vozilo) {
+        ObservableList<Vozilo> vozila = getVozila();
+        if (!daLiPostojiVlasnik(vozilo)) {
+            throw new IllegalArgumentException("Ne postoji vlasnik!");
+        }
+        if (vozilo.getId() == 0) {
+            int maxId = vozila.stream()
+                    .max(Comparator.comparing(Vozilo::getId)).get().getId();
+            vozilo.setId(maxId+1);
+        }
+        ObservableList<Proizvodjac> proizvodjaci = getProizvodjaci();
+        if (vozilo.getProizvodjac().getId() == 0) {
+            int maxId = proizvodjaci.stream()
+                    .max(Comparator.comparing(Proizvodjac::getId)).get().getId();
+            vozilo.getProizvodjac().setId(maxId+1);
+            proizvodjaci.add(vozilo.getProizvodjac());
+            ArrayList<Proizvodjac> temp = new ArrayList<Proizvodjac>(proizvodjaci);
+            ispisiProizvodjaceXML(temp);
+        }
+        vozila.add(vozilo);
+        ArrayList<Vozilo> temp = new ArrayList<Vozilo>(vozila);
+        ispisiVozilaXML(temp);
 
+    }
+
+    private void ispisiProizvodjaceXML(ArrayList<Proizvodjac> lista) {
+        XMLEncoder encoder=null;
+        try{
+            encoder=new XMLEncoder(new BufferedOutputStream(new FileOutputStream("proizvodjaci.xml")));
+        }
+        catch(FileNotFoundException ex){
+            ex.printStackTrace();
+        }
+        encoder.writeObject(lista);
+        encoder.close();
+    }
+
+
+    private void ispisiVozilaXML(ArrayList<Vozilo> lista) {
+        XMLEncoder encoder=null;
+        try{
+            encoder=new XMLEncoder(new BufferedOutputStream(new FileOutputStream("vozila.xml")));
+        }
+        catch(FileNotFoundException ex){
+            ex.printStackTrace();
+        }
+        encoder.writeObject(lista);
+        encoder.close();
+    }
+
+    private boolean daLiPostojiVlasnik(Vozilo vozilo) {
+        ObservableList<Vlasnik> vlasnici = getVlasnici();
+        for (Vlasnik v : vlasnici) {
+            if (vozilo.getVlasnik().getId() == v.getId()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public void promijeniVozilo(Vozilo vozilo) {
+        ObservableList<Vozilo> vozila = getVozila();
+        ObservableList<Proizvodjac> proizvodjaci = getProizvodjaci();
+        if (vozilo.getProizvodjac().getId() == 0) {
+            int maxId = proizvodjaci.stream()
+                    .max(Comparator.comparing(Proizvodjac::getId)).get().getId();
+            vozilo.getProizvodjac().setId(maxId+1);
+            proizvodjaci.add(vozilo.getProizvodjac());
+            ArrayList<Proizvodjac> temp = new ArrayList<Proizvodjac>(proizvodjaci);
+            ispisiProizvodjaceXML(temp);
+        }
+        for (Vozilo v: vozila) {
+            if (v.getId() == vozilo.getId())
+                vozila.set(vozila.indexOf(v), vozilo);
+        }
+        //vozila.add(vozilo);
+        ArrayList<Vozilo> temp = new ArrayList<Vozilo>(vozila);
+        ispisiVozilaXML(temp);
 
     }
 
     @Override
     public void obrisiVozilo(Vozilo vozilo) {
-
+        ObservableList<Vozilo> vozila = getVozila();
+        ArrayList<Vozilo> temp = new ArrayList<Vozilo>(vozila);
+        int i = 0;
+        for (Vozilo v : temp) {
+            if(v.getId() == vozilo.getId()) {
+                temp.remove(i);
+                break;
+            }
+            i++;
+        }
+        ispisiVozilaXML(temp);
     }
 
     @Override
     public void close() {
+        File dbfile = new File("mjesta.xml");
+        dbfile.delete();
+        dbfile = new File("proizvodjaci.xml");
+        dbfile.delete();
 
+        dbfile = new File("vlasnici.xml");
+        dbfile.delete();
 
+        dbfile = new File("vozila.xml");
+        dbfile.delete();
     }
 }
