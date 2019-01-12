@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.Callback;
@@ -92,6 +93,54 @@ public class VlasnikController {
                 postanskiBrojField.setDisable(false);
             }
         });
+
+        imeField.textProperty().addListener((observableValue, s, n) -> {
+            if (ValidatorskaKlasa.daLiJeValidanString(n)) {
+                imeField.getStyleClass().removeAll("poljeNijeIspravno");
+                imeField.getStyleClass().add("poljeIspravno");
+            }
+            else {
+                imeField.getStyleClass().removeAll("poljeIspravno");
+                imeField.getStyleClass().add("poljeNijeIspravno");
+            }
+        });
+
+        datumField.getEditor().textProperty().addListener((observableValue, s, n) -> {
+            if (ValidatorskaKlasa.daLiJeValidanDatum(datumField.getValue().toString()) &&
+                    ValidatorskaKlasa.validirajJmbgDatum(jmbgField.getText(), datumField.getValue())) {
+                datumField.getStyleClass().removeAll("poljeNijeIspravno");
+                datumField.getStyleClass().add("poljeIspravno");
+                jmbgField.getStyleClass().removeAll("poljeNijeIspravno");
+                jmbgField.getStyleClass().add("poljeIspravno");
+            }
+            else {
+                datumField.getStyleClass().removeAll("poljeIspravno");
+                datumField.getStyleClass().add("poljeNijeIspravno");
+                jmbgField.getStyleClass().removeAll("poljeIspravno");
+                jmbgField.getStyleClass().add("poljeNijeIspravno");
+            }
+
+        });
+
+        jmbgField.textProperty().addListener((observableValue, s, t1) -> {
+            if (ValidatorskaKlasa.daLiJeIspravanJMBG(jmbgField.getText()) &&
+                ValidatorskaKlasa.validirajJmbgDatum(jmbgField.getText(), datumField.getValue())) {
+                datumField.getStyleClass().removeAll("poljeNijeIspravno");
+                datumField.getStyleClass().add("poljeIspravno");
+                jmbgField.getStyleClass().removeAll("poljeNijeIspravno");
+                jmbgField.getStyleClass().add("poljeIspravno");
+            }
+            else {
+                datumField.getStyleClass().removeAll("poljeIspravno");
+                datumField.getStyleClass().add("poljeNijeIspravno");
+                jmbgField.getStyleClass().removeAll("poljeIspravno");
+                jmbgField.getStyleClass().add("poljeNijeIspravno");
+            }
+        });
+
+
+
+
     }
 
     private void inicijalizirajDataBinding() {
@@ -116,6 +165,13 @@ public class VlasnikController {
         datumProperty.set(trenutniVlasnik.getDatumRodjenja());
         adresaMjestoProperty.set(trenutniVlasnik.getMjestoPrebivalista());
         mjestoRodjenjaProperty.set(trenutniVlasnik.getMjestoRodjenja());
+    }
+
+    public void potvrdiFormuBtn(ActionEvent actionEvent) {
+        System.out.println(datumField.getValue().toString());
+
+        System.out.println(ValidatorskaKlasa.daLiJeValidanDatum(datumField.getValue().toString()));
+
     }
 
 }
