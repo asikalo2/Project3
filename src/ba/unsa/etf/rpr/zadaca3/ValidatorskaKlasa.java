@@ -18,12 +18,12 @@ public final class ValidatorskaKlasa {
     }
 
     public static boolean daLiJeValidanDatum(String s) {
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat format = new SimpleDateFormat("M/d/yyyy");
         format.setLenient(false);
 
         try {
             Date t = format.parse(s);
-            System.out.println(t);
+            //System.out.println(t);
             if (t.compareTo(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant())) != -1)
                 return false;
         } catch (ParseException e) {

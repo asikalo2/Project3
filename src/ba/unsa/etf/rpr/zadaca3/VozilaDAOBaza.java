@@ -62,7 +62,7 @@ public class VozilaDAOBaza implements VozilaDAO {
             while (rs.next()) {
                 Mjesto mjestoRodjenja = new Mjesto(rs.getInt(13), rs.getString(14), rs.getString(15));
                 Mjesto mjestoPrebivalista = new Mjesto(rs.getInt(10), rs.getString(11), rs.getString(12));
-                LocalDate datumRodjenja = Instant.ofEpochMilli(Integer.valueOf(
+                LocalDate datumRodjenja = Instant.ofEpochSecond(Long.valueOf(
                         rs.getString(5))).atZone(ZoneId.systemDefault()).toLocalDate();
                 Vlasnik vlasnik = new Vlasnik(rs.getInt(1), rs.getString(2),
                         rs.getString(3), rs.getString(4), datumRodjenja, mjestoRodjenja, rs.getString(7),
