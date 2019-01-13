@@ -19,6 +19,27 @@
     -fx-background-repeat: no-repeat;
 }
 
+#tbAddVozilo {
+    -fx-background-image: url("../img/plus.png");
+    -fx-background-size: 18 18;
+    -fx-background-position:center;
+    -fx-background-repeat: no-repeat;
+}
+
+#tbRemoveVozilo {
+    -fx-background-image: url("../img/minus.png");
+    -fx-background-size: 18 18;
+    -fx-background-position:center;
+    -fx-background-repeat: no-repeat;
+}
+
+#tbEditVozilo {
+    -fx-background-image: url("../img/edit.png");
+    -fx-background-size: 18 18;
+    -fx-background-position:center;
+    -fx-background-repeat: no-repeat;
+}
+
 .poljeIspravno {
     -fx-control-inner-background: greenyellow;
 }

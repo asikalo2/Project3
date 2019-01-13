@@ -114,4 +114,45 @@ public class Controller implements Initializable {
         }
 
     }
+
+    public void addVozilo(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            VoziloController voziloController = new VoziloController(dao, null);
+            loader.setController(voziloController);
+            loader.setLocation(getClass().getResource("/fxml/vozilo.fxml"));
+            Scene scene = new Scene(loader.load(), 600, 400);
+            Stage stage = new Stage();
+            stage.setTitle("Vozilo");
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void removeVozilo(ActionEvent actionEvent) {
+    }
+
+    public void editVozilo(ActionEvent actionEvent) {
+        if (tabelaVozilo.getSelectionModel().getSelectedItems() == null)
+            return;
+        Vozilo vozilo = (Vozilo) tabelaVozilo.getSelectionModel().getSelectedItem();
+
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            VoziloController voziloController = new VoziloController(dao, vozilo);
+            loader.setController(voziloController);
+            loader.setLocation(getClass().getResource("/fxml/vozilo.fxml"));
+            Scene scene = new Scene(loader.load(), 600, 400);
+            Stage stage = new Stage();
+            stage.setTitle("Vozilo");
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

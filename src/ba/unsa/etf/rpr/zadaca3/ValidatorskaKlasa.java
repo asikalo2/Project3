@@ -86,4 +86,28 @@ public final class ValidatorskaKlasa {
         return false;
     }
 
+    private static boolean provjeriZnak(char c) {
+        // A, E, O, T, K, J, M, 0-9
+        if (c == 'A' || c == 'E' || c == 'O' || c == 'T' || c == 'K' || c == 'J' || c == 'M' ||
+                (c > '0' && c < '9'))
+            return true;
+        return false;
+    }
+
+    public static boolean validirajTablice(String t) {
+        t = t.toUpperCase();
+        if (t.length() != 9)
+            return false;
+        if (t.charAt(3) != '-' || t.charAt(5) != '-')
+            return false;
+
+        for (int i = 0; i < t.length(); i++) {
+            if (i == 3 || i == 5)
+                continue;
+            if (!provjeriZnak(t.charAt(i)))
+                return false;
+        }
+        return true;
+    }
+
 }

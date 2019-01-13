@@ -6,9 +6,68 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="ba.unsa.etf.rpr.zadaca3.VoziloController"
-            prefHeight="400.0" prefWidth="600.0">
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<GridPane alignment="CENTER" vgap="4" hgap="4"
+          xmlns="http://javafx.com/javafx/8.0.172-ea"
+          xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@../css/style.css"/>
+    </stylesheets>
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+    <columnConstraints>
+        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" percentWidth="50"/>
+        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" percentWidth="50"/>
+    </columnConstraints>
+    <rowConstraints>
+        <!--<RowConstraints percentHeight="20" vgrow="ALWAYS"/>
+        <RowConstraints percentHeight="20" vgrow="ALWAYS"/>
+        <RowConstraints percentHeight="20" vgrow="ALWAYS"/>
+        <RowConstraints percentHeight="20" vgrow="ALWAYS"/>
+        <RowConstraints percentHeight="20" vgrow="ALWAYS"/>-->
+    </rowConstraints>
+    <children>
 
-</AnchorPane>
+        <Label fx:id="modelLabel" GridPane.rowIndex="1" GridPane.columnIndex="0"
+               maxHeight="Infinity" maxWidth="Infinity" text="Model:"/>
+
+        <TextField fx:id="modelField" GridPane.rowIndex="1" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+        <Label fx:id="brojSasijeLabel" GridPane.rowIndex="2" GridPane.columnIndex="0"
+               maxHeight="Infinity" maxWidth="Infinity" text="Broj Sasije:"/>
+
+        <TextField fx:id="brojSasijeField" GridPane.rowIndex="2" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+        <Label fx:id="brojTablicaLabel" GridPane.rowIndex="3" GridPane.columnIndex="0"
+               maxHeight="Infinity" maxWidth="Infinity" text="Broj Tablica:"/>
+
+        <TextField fx:id="brojTablicaField" GridPane.rowIndex="3" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+        <Label fx:id="proizvodjacLabel" GridPane.rowIndex="7" GridPane.columnIndex="0"
+               maxHeight="Infinity" maxWidth="Infinity" text="Proizvodjac:"/>
+
+        <ComboBox fx:id="proizvodjacCombo" GridPane.rowIndex="7" GridPane.columnIndex="1" editable="true"
+                  maxWidth="Infinity">
+        </ComboBox>
+
+        <Label fx:id="vlasnikLabel" GridPane.rowIndex="8" GridPane.columnIndex="0"
+               maxHeight="Infinity" maxWidth="Infinity" text="Vlasnik:"/>
+
+        <ComboBox fx:id="vlasnikCombo" GridPane.rowIndex="8" GridPane.columnIndex="1"
+                  maxWidth="Infinity" />
+
+
+        <ButtonBar GridPane.rowIndex="10" GridPane.columnSpan="2">
+            <GridPane.margin>
+                <Insets top="25"/>
+            </GridPane.margin>
+            <buttons>
+                <Button text="OK" fx:id="okButton" ButtonBar.buttonData="RIGHT" onAction="#potvrdiFormuBtn" />
+                <Button text="Prekini" fx:id="cancelButton" ButtonBar.buttonData="LEFT" onAction="#prekiniFormuBtn" />
+            </buttons>
+        </ButtonBar>
+
+    </children>
+</GridPane>

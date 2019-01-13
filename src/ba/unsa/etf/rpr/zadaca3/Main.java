@@ -10,6 +10,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
+        ValidatorskaKlasa.validirajTablice("A12-B-456");
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/glavna.fxml"));
         primaryStage.setTitle("Auto-moto klub");
         primaryStage.setScene(new Scene(root, 800, 600));
