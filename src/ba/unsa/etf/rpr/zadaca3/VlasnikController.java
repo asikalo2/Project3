@@ -81,6 +81,20 @@ public class VlasnikController {
                 }
             }
         });
+
+        adresaMjesto.setConverter(new StringConverter<Mjesto>() {
+            @Override
+            public String toString(Mjesto mjesto) {
+                return mjesto == null ? "" : mjesto.getNaziv();
+            }
+
+            @Override
+            public Mjesto fromString(String s) {
+                Mjesto m = new Mjesto(0, s, "");
+                return m;
+            }
+        });
+
         postanskiBrojField.setDisable(true);
         inicijalizirajDataBinding();
         dodajListenere();
@@ -91,7 +105,7 @@ public class VlasnikController {
 
     private void dodajListenere() {
         adresaMjesto.getEditor().textProperty().addListener((observableValue, staro, novo) -> {
-            if (staro.length() != 0 && novo != trenutniVlasnik.getMjestoPrebivalista().getNaziv()) {
+            if (trenutniVlasnik != null && staro.length() != 0 && novo != trenutniVlasnik.getMjestoPrebivalista().getNaziv()) {
                 postanskiBrojField.setDisable(false);
             }
         });
@@ -140,6 +154,24 @@ public class VlasnikController {
             }
         });
 
+        adresaMjesto.getSelectionModel().selectedItemProperty().addListener((observableValue, staroMjesto, novoMjesto) -> {
+            if (novoMjesto.getPostanskiBroj() != "") {
+                postanskiBrojProperty.set(novoMjesto.getPostanskiBroj());
+                postanskiBrojField.setDisable(false);
+                if (ValidatorskaKlasa.daLiJeValidanString(postanskiBrojField.getText())) {
+                    postanskiBrojField.getStyleClass().removeAll("poljeNijeIspravno");
+                    postanskiBrojField.getStyleClass().add("poljeIspravno");
+                } else {
+                    postanskiBrojField.getStyleClass().removeAll("poljeIspravno");
+                    postanskiBrojField.getStyleClass().add("poljeNijeIspravno");
+                }
+            }
+        });
+
+        adresaMjesto.valueProperty().addListener((observableValue, mjesto, n) -> {
+            adresaMjesto.setValue(n);
+        });
+
         datumField.getEditor().textProperty().addListener((observableValue, s, n) -> {
             //System.out.println(n); System.out.println(ValidatorskaKlasa.daLiJeValidanDatum(n));
             if (ValidatorskaKlasa.daLiJeValidanDatum(n)) {
@@ -170,11 +202,16 @@ public class VlasnikController {
         });
 
         adresaMjesto.getEditor().textProperty().addListener((observableValue, s, n) -> {
+            Mjesto m = new Mjesto(0, n, "");
+            adresaMjestoProperty.set(m);
+            adresaMjesto.setValue(m);
             if (ValidatorskaKlasa.daLiJeValidanString(n)) {
+                postanskiBrojField.setDisable(false);
                 adresaMjesto.getStyleClass().removeAll("poljeNijeIspravno");
                 adresaMjesto.getStyleClass().add("poljeIspravno");
             }
             else {
+                postanskiBrojField.setDisable(true);
                 adresaMjesto.getStyleClass().removeAll("poljeIspravno");
                 adresaMjesto.getStyleClass().add("poljeNijeIspravno");
             }
@@ -224,27 +261,62 @@ public class VlasnikController {
         postanskiBrojProperty.set(trenutniVlasnik.getMjestoPrebivalista().getPostanskiBroj());
         datumProperty.set(trenutniVlasnik.getDatumRodjenja());
         adresaMjestoProperty.set(trenutniVlasnik.getMjestoPrebivalista());
+        adresaMjesto.setValue(trenutniVlasnik.getMjestoPrebivalista());
         mjestoRodjenjaProperty.set(trenutniVlasnik.getMjestoRodjenja());
     }
 
     public void potvrdiFormuBtn(ActionEvent actionEvent) {
         if (daLiJeValidnaForma()) {
+            boolean dodavanje = trenutniVlasnik == null;
+            if (trenutniVlasnik == null) {
+                trenutniVlasnik = new Vlasnik();
+            }
             trenutniVlasnik.setIme(imeProperty.get());
             trenutniVlasnik.setPrezime(prezimeProperty.get());
             trenutniVlasnik.setImeRoditelja(imeRoditeljaProperty.get());
             trenutniVlasnik.setJmbg(jmbgProperty.get());
             trenutniVlasnik.setDatumRodjenja(datumProperty.get());
 
+            if (trenutniVlasnik.getMjestoPrebivalista() == null)
+                trenutniVlasnik.setMjestoPrebivalista(adresaMjesto.getValue());
+
             if (adresaMjesto.getEditor().getText() != trenutniVlasnik.getMjestoPrebivalista().getNaziv() ||
                 postanskiBrojProperty.get() != trenutniVlasnik.getMjestoPrebivalista().getPostanskiBroj()) {
                 Mjesto m = new Mjesto(0, adresaMjesto.getEditor().getText(), postanskiBrojProperty.get());
                 trenutniVlasnik.setMjestoPrebivalista(m);
             }
-            dao.promijeniVlasnika(trenutniVlasnik);
+            trenutniVlasnik.setMjestoRodjenja(mjestoRodjenja.getValue());
+            trenutniVlasnik.setAdresaPrebivalista(adresaPrebivalistaProperty.get());
+            if (dodavanje)
+                dao.dodajVlasnika(trenutniVlasnik);
+            else
+                dao.promijeniVlasnika(trenutniVlasnik);
             Stage stage = (Stage) okButton.getScene().getWindow();
             // do what you have to do
             stage.close();
+        }
+        else {
+            postaviFlagove();
+        }
+    }
 
+    private void postaviFlagove() {
+        if (ValidatorskaKlasa.daLiJeValidanString(imeField.getText())) {
+            imeField.getStyleClass().removeAll("poljeNijeIspravno");
+            imeField.getStyleClass().add("poljeIspravno");
+        }
+        else {
+            imeField.getStyleClass().removeAll("poljeIspravno");
+            imeField.getStyleClass().add("poljeNijeIspravno");
+        }
+
+        if (ValidatorskaKlasa.daLiJeValidanString(postanskiBrojField.getText())) {
+            postanskiBrojField.getStyleClass().removeAll("poljeNijeIspravno");
+            postanskiBrojField.getStyleClass().add("poljeIspravno");
+        }
+        else {
+            postanskiBrojField.getStyleClass().removeAll("poljeIspravno");
+            postanskiBrojField.getStyleClass().add("poljeNijeIspravno");
         }
     }
 
@@ -260,7 +332,6 @@ public class VlasnikController {
 
     public void prekiniFormuBtn(ActionEvent actionEvent) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
-        // do what you have to do
         stage.close();
     }
 
