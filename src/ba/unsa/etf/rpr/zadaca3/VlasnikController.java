@@ -4,7 +4,10 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -38,6 +41,8 @@ public class VlasnikController {
     public SimpleObjectProperty<Mjesto> adresaMjestoProperty;
     public SimpleObjectProperty<Mjesto> mjestoRodjenjaProperty;
 
+    PostanskiBrojValidator validator;
+
     @FXML
     public Button cancelButton;
     @FXML
@@ -55,6 +60,7 @@ public class VlasnikController {
         datumProperty = new SimpleObjectProperty<LocalDate>();
         adresaMjestoProperty = new SimpleObjectProperty<Mjesto>();
         mjestoRodjenjaProperty = new SimpleObjectProperty<Mjesto>();
+        validator = new PostanskiBrojValidator("");
     }
 
     @FXML
@@ -235,6 +241,42 @@ public class VlasnikController {
             } else {
                 postanskiBrojField.getStyleClass().removeAll("poljeIspravno");
                 postanskiBrojField.getStyleClass().add("poljeNijeIspravno");
+            }
+        });
+
+        postanskiBrojField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if (aBoolean && !t1) {
+                    validator.setBroj(postanskiBrojField.getText());
+
+                    Task<Boolean> task = new Task<Boolean>() {
+                        @Override
+                        protected Boolean call() throws Exception {
+                            System.out.println("calling");
+                            return validator.provjeriPostanskiBroj(postanskiBrojField.getText());
+                        }
+                    };
+
+                    task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                        @Override
+                        public void handle(WorkerStateEvent workerStateEvent) {
+                            Boolean value = task.getValue();
+                            System.out.println(value);
+                            if (value) {
+                                System.out.println("test 1");
+                                postanskiBrojField.getStyleClass().removeAll("poljeNijeIspravno");
+                                postanskiBrojField.getStyleClass().add("poljeIspravno");
+                            } else {
+                                postanskiBrojField.getStyleClass().removeAll("poljeIspravno");
+                                postanskiBrojField.getStyleClass().add("poljeNijeIspravno");
+                            }
+                        }
+                    });
+
+                    new Thread(task).start();
+
+                }
             }
         });
 
