@@ -204,6 +204,55 @@ class VlasnikControllerTest {
     }
 
     @Test
+    public void testPostanskiBrojValidacija (FxRobot robot) {
+        // Ako se unese novo mjesto prebivališta, polje poštanski broj ne smije biti prazno
+        robot.clickOn("#adresaMjesto");
+        robot.write("Travnik");
+
+        robot.clickOn("#postanskiBrojField");
+        robot.write("72271");
+
+        // promjena fokusa
+        robot.clickOn("#adresaMjesto");
+
+        // cekamo 5 sekundi
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        TextField ime = robot.lookup("#postanskiBrojField").queryAs(TextField.class);
+        Background bg = ime.getBackground();
+        boolean colorFound = false;
+        for (BackgroundFill bf : bg.getFills())
+            if (bf.getFill().toString().contains("ffb6c1"))
+                colorFound = true;
+        assertTrue(colorFound);
+
+        robot.clickOn("#postanskiBrojField");
+        robot.press(KeyCode.CONTROL).press(KeyCode.A).release(KeyCode.A).release(KeyCode.CONTROL);
+        robot.write("72270");
+
+        robot.clickOn("#adresaMjesto");
+
+        // cekamo 5 sekundi
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ime = robot.lookup("#postanskiBrojField").queryAs(TextField.class);
+        bg = ime.getBackground();
+        colorFound = false;
+        for (BackgroundFill bf : bg.getFills())
+            if (bf.getFill().toString().contains("adff2f"))
+                colorFound = true;
+        assertTrue(colorFound);
+    }
+
+    @Test
     public void testMjesta (FxRobot robot) {
         ComboBox adresaMjesto = robot.lookup("#adresaMjesto").queryAs(ComboBox.class);
         Platform.runLater(() -> adresaMjesto.show());

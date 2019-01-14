@@ -25,7 +25,6 @@ public class PostanskiBrojValidator implements Runnable {
         while ((line = in.readLine()) != null)
             sadrzaj += line;
 
-        System.out.println(sadrzaj);
         in.close();
 
         if (sadrzaj.equals("OK")) {
@@ -37,7 +36,6 @@ public class PostanskiBrojValidator implements Runnable {
     @Override
     public void run() {
         try {
-            System.out.println("provjeravam " + broj);
             validan = provjeriPostanskiBroj(broj);
         }
         catch (Exception e) {}
