@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_191" class="java.beans.XMLDecoder">
+ <object class="java.util.ArrayList">
+  <void method="add">
+   <object class="ba.unsa.etf.rpr.zadaca3.Vozilo">
+    <void property="brojSasije">
+     <string>1234154123</string>
+    </void>
+    <void property="brojTablica">
+     <string>A12-O-123</string>
+    </void>
+    <void property="id">
+     <int>1</int>
+    </void>
+    <void property="model">
+     <string>Golf</string>
+    </void>
+    <void property="proizvodjac">
+     <object class="ba.unsa.etf.rpr.zadaca3.Proizvodjac">
+      <void property="id">
+       <int>1</int>
+      </void>
+      <void property="naziv">
+       <string>Volkswagen</string>
+      </void>
+     </object>
+    </void>
+    <void property="vlasnik">
+     <object class="ba.unsa.etf.rpr.zadaca3.Vlasnik">
+      <void property="adresaPrebivalista">
+       <string>Zmaja od Bosne bb</string>
+      </void>
+      <void property="id">
+       <int>1</int>
+      </void>
+      <void property="ime">
+       <string>Meho</string>
+      </void>
+      <void property="imeRoditelja">
+       <string>Mehaga</string>
+      </void>
+      <void property="jmbg">
+       <string>12345345234512</string>
+      </void>
+      <void property="mjestoPrebivalista">
+       <object class="ba.unsa.etf.rpr.zadaca3.Mjesto">
+        <void property="id">
+         <int>1</int>
+        </void>
+        <void property="naziv">
+         <string>Sarajevo</string>
+        </void>
+        <void property="postanskiBroj">
+         <string>71000</string>
+        </void>
+       </object>
+      </void>
+      <void property="mjestoRodjenja">
+       <object class="ba.unsa.etf.rpr.zadaca3.Mjesto">
+        <void property="id">
+         <int>1</int>
+        </void>
+        <void property="naziv">
+         <string>Sarajevo</string>
+        </void>
+        <void property="postanskiBroj">
+         <string>71000</string>
+        </void>
+       </object>
+      </void>
+      <void property="prezime">
+       <string>Mehic</string>
+      </void>
+     </object>
+    </void>
+   </object>
+  </void>
+ </object>
+</java>

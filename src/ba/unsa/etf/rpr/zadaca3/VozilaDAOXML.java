@@ -285,7 +285,7 @@ public class VozilaDAOXML implements VozilaDAO {
 
     @Override
     public void close() {
-        File dbfile = new File("mjesta.xml");
+        /*File dbfile = new File("mjesta.xml");
         dbfile.delete();
         dbfile = new File("proizvodjaci.xml");
         dbfile.delete();
@@ -294,6 +294,6 @@ public class VozilaDAOXML implements VozilaDAO {
         dbfile.delete();
 
         dbfile = new File("vozila.xml");
-        dbfile.delete();
+        dbfile.delete();*/
     }
 }

@@ -398,6 +398,13 @@ public class VozilaDAOBaza implements VozilaDAO {
 
     @Override
     public void close() {
-
+        try {
+            conn.close();
+            conn = null;
+            instance = null;
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 }

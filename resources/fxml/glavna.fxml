@@ -69,7 +69,7 @@
                             </HBox>
                         </items>
                     </ToolBar>
-                    <TableView fx:id="tabelaVozilo" style="-fx-aligmnent: CENTER;">
+                    <TableView fx:id="tabelaVozila" style="-fx-aligmnent: CENTER;">
                         <columns>
                             <TableColumn fx:id="idColumn1" prefWidth="50.0" text="Id"/>
                             <TableColumn fx:id="nazivProizvodjacaColumn1" prefWidth="180.0" text="Naziv Proizvodjaca"/>
