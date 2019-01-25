@@ -150,6 +150,7 @@ public class VlasnikEditTest {
         robot.clickOn("#datumField");
         robot.press(KeyCode.CONTROL).press(KeyCode.A).release(KeyCode.A).release(KeyCode.CONTROL);
         robot.write("1/1/2020");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
         robot.clickOn("#okButton");
         assertTrue(theStage.isShowing());
@@ -165,6 +166,7 @@ public class VlasnikEditTest {
         robot.clickOn("#datumField");
         robot.press(KeyCode.CONTROL).press(KeyCode.A).release(KeyCode.A).release(KeyCode.CONTROL);
         robot.write("1/1/2018");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         robot.clickOn("#imeField");
         robot.press(KeyCode.CONTROL).press(KeyCode.A).release(KeyCode.A).release(KeyCode.CONTROL);
         robot.press(KeyCode.DELETE).release(KeyCode.DELETE);
@@ -203,6 +205,7 @@ public class VlasnikEditTest {
         robot.clickOn("#datumField");
         robot.press(KeyCode.CONTROL).press(KeyCode.A).release(KeyCode.A).release(KeyCode.CONTROL);
         robot.write("1/8/2003");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
         robot.clickOn("#jmbgField");
         robot.press(KeyCode.CONTROL).press(KeyCode.A).release(KeyCode.A).release(KeyCode.CONTROL);
@@ -277,10 +280,11 @@ public class VlasnikEditTest {
 
         robot.clickOn("#postanskiBrojField");
         robot.press(KeyCode.CONTROL).press(KeyCode.A).release(KeyCode.A).release(KeyCode.CONTROL);
-        robot.write("73000");
+        robot.write("75000");
         robot.clickOn("#datumField");
         robot.press(KeyCode.CONTROL).press(KeyCode.A).release(KeyCode.A).release(KeyCode.CONTROL);
         robot.write("1/8/2003");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         robot.clickOn("#jmbgField");
         robot.press(KeyCode.CONTROL).press(KeyCode.A).release(KeyCode.A).release(KeyCode.CONTROL);
         robot.write("0801003500007");
@@ -305,6 +309,6 @@ public class VlasnikEditTest {
         assertEquals(3, mjesta.size());
         assertEquals(3, mjesta.get(2).getId());
         assertEquals("Zenica", mjesta.get(2).getNaziv());
-        assertEquals("73000", mjesta.get(2).getPostanskiBroj());
+        assertEquals("75000", mjesta.get(2).getPostanskiBroj());
     }
 }

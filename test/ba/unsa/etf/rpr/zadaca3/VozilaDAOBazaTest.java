@@ -1,11 +1,18 @@
 package ba.unsa.etf.rpr.zadaca3;
 
 import javafx.collections.ObservableList;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,9 +46,7 @@ class VozilaDAOBazaTest {
         assertEquals(1, vlasnici.size());
         assertEquals("Meho", vlasnici.get(0).getIme());
         assertEquals("Mehaga", vlasnici.get(0).getImeRoditelja());
-        // Datum koji je zapisan u bazi Unix time converter na
-        // https://www.epochconverter.com/ pretvara u 16.8.1972.
-        assertEquals(LocalDate.of(1972,8,16), vlasnici.get(0).getDatumRodjenja());
+        assertEquals(LocalDate.of(1970,1,2), vlasnici.get(0).getDatumRodjenja());
         assertEquals("Sarajevo", vlasnici.get(0).getMjestoRodjenja().getNaziv());
         assertEquals("Zmaja od Bosne bb", vlasnici.get(0).getAdresaPrebivalista());
         assertEquals("Sarajevo", vlasnici.get(0).getMjestoPrebivalista().getNaziv());
@@ -72,8 +77,9 @@ class VozilaDAOBazaTest {
         initDb();
         ObservableList<Proizvodjac> proizvodjaci = dao.getProizvodjaci();
         assertEquals(3, proizvodjaci.size());
+        // Ovo će vratiti abecedno
+        assertEquals("Ford", proizvodjaci.get(0).getNaziv());
         assertEquals("Renault", proizvodjaci.get(1).getNaziv());
-        assertEquals("Ford", proizvodjaci.get(2).getNaziv());
     }
 
     @Test
@@ -229,11 +235,10 @@ class VozilaDAOBazaTest {
         // Da li se hyundai zaista dodao u listu proizvođača?
         ObservableList<Proizvodjac> proizvodjaci = dao.getProizvodjaci();
         assertEquals(4, proizvodjaci.size());
-        // ISPRAVKA TESTA: PROIZVODJACI SE ABECEDNO SORTIRAJU OD Z-A
-        // ZBOG TESTA METDODE getProizvodjaci() A NE PO ID-u
-        assertEquals("Hyundai", proizvodjaci.get(2).getNaziv());
+        // Ovo će vratiti abecedno, tako da će Hyundai biti na indeksu 1 (poslije Ford a prije Renault)
+        assertEquals("Hyundai", proizvodjaci.get(1).getNaziv());
         // Trebao bi dobiti Id 4
-        assertEquals(4, proizvodjaci.get(2).getId());
+        assertEquals(4, proizvodjaci.get(1).getId());
     }
 
     @Test
@@ -255,9 +260,10 @@ class VozilaDAOBazaTest {
         // Da li se hyundai zaista dodao u listu proizvođača?
         ObservableList<Proizvodjac> proizvodjaci = dao.getProizvodjaci();
         assertEquals(4, proizvodjaci.size());
-        assertEquals("Hyundai", proizvodjaci.get(2).getNaziv());
+        // Ovo će vratiti abecedno, tako da će Hyundai biti na indeksu 1 (poslije Ford a prije Renault)
+        assertEquals("Hyundai", proizvodjaci.get(1).getNaziv());
         // Trebao bi dobiti Id 4
-        assertEquals(4, proizvodjaci.get(2).getId());
+        assertEquals(4, proizvodjaci.get(1).getId());
     }
 
     @Test

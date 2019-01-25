@@ -160,6 +160,7 @@ class VlasnikControllerTest {
         robot.clickOn("#datumField");
         robot.press(KeyCode.CONTROL).press(KeyCode.A).release(KeyCode.A).release(KeyCode.CONTROL);
         robot.write("1/1/2018");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
         robot.clickOn("#okButton");
 
@@ -190,53 +191,11 @@ class VlasnikControllerTest {
 
         robot.clickOn("#postanskiBrojField");
         robot.press(KeyCode.CONTROL).press(KeyCode.A).release(KeyCode.A).release(KeyCode.CONTROL);
-        robot.write("73000");
+        robot.write("75000");
 
         robot.clickOn("#okButton");
 
-        ime = robot.lookup("#postanskiBrojField").queryAs(TextField.class);
-        bg = ime.getBackground();
-        colorFound = false;
-        for (BackgroundFill bf : bg.getFills())
-            if (bf.getFill().toString().contains("adff2f"))
-                colorFound = true;
-        assertTrue(colorFound);
-    }
-
-    @Test
-    public void testPostanskiBrojValidacija (FxRobot robot) {
-        // Ako se unese novo mjesto prebivališta, polje poštanski broj ne smije biti prazno
-        robot.clickOn("#adresaMjesto");
-        robot.write("Travnik");
-
-        robot.clickOn("#postanskiBrojField");
-        robot.write("72271");
-
-        // promjena fokusa
-        robot.clickOn("#adresaMjesto");
-
-        // cekamo 5 sekundi
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        TextField ime = robot.lookup("#postanskiBrojField").queryAs(TextField.class);
-        Background bg = ime.getBackground();
-        boolean colorFound = false;
-        for (BackgroundFill bf : bg.getFills())
-            if (bf.getFill().toString().contains("ffb6c1"))
-                colorFound = true;
-        assertTrue(colorFound);
-
-        robot.clickOn("#postanskiBrojField");
-        robot.press(KeyCode.CONTROL).press(KeyCode.A).release(KeyCode.A).release(KeyCode.CONTROL);
-        robot.write("72270");
-
-        robot.clickOn("#adresaMjesto");
-
-        // cekamo 5 sekundi
+        // Dajemo vremena da se validira poštanski broj
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
@@ -279,6 +238,7 @@ class VlasnikControllerTest {
     public void testJmbgValidacija (FxRobot robot) {
         robot.clickOn("#datumField");
         robot.write("1/8/2003");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
 
         robot.clickOn("#jmbgField");
         robot.write("1234");
@@ -348,6 +308,7 @@ class VlasnikControllerTest {
         robot.write("f");
         robot.clickOn("#datumField");
         robot.write("1/8/2003");
+        robot.press(KeyCode.ENTER).release(KeyCode.ENTER);
         robot.clickOn("#jmbgField");
         robot.write("0801003500007");
 
@@ -367,10 +328,18 @@ class VlasnikControllerTest {
         robot.write("Zenica");
 
         robot.clickOn("#postanskiBrojField");
-        robot.write("73000");
+        robot.write("75000");
 
         // Sve validno, prozor se zatvara
         robot.clickOn("#okButton");
+
+        // Dajemo vremena da se validira poštanski broj
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         assertFalse(theStage.isShowing());
 
         // Da li je novi vlasnik u bazi
@@ -393,6 +362,6 @@ class VlasnikControllerTest {
         assertEquals(3, mjesta.size());
         assertEquals(3, mjesta.get(2).getId());
         assertEquals("Zenica", mjesta.get(2).getNaziv());
-        assertEquals("73000", mjesta.get(2).getPostanskiBroj());
+        assertEquals("75000", mjesta.get(2).getPostanskiBroj());
     }
 }
