@@ -61,6 +61,7 @@ public class VozilaDAOXML implements VozilaDAO {
             BufferedInputStream bis = new BufferedInputStream(fis);
             XMLDecoder xmlDecoder = new XMLDecoder(bis);
             ArrayList<Mjesto> mjesta = (ArrayList<Mjesto>) xmlDecoder.readObject();
+            mjesta.sort(((Mjesto s1, Mjesto s2)->s1.getNaziv().compareTo(s2.getNaziv())));
             xmlDecoder.close();
             return FXCollections.observableArrayList(mjesta);
         }

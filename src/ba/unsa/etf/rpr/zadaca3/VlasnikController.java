@@ -253,7 +253,7 @@ public class VlasnikController {
                     Task<Boolean> task = new Task<Boolean>() {
                         @Override
                         protected Boolean call() throws Exception {
-                            System.out.println("calling");
+                            //System.out.println("calling");
                             return validator.provjeriPostanskiBroj(postanskiBrojField.getText());
                         }
                     };
@@ -262,9 +262,9 @@ public class VlasnikController {
                         @Override
                         public void handle(WorkerStateEvent workerStateEvent) {
                             Boolean value = task.getValue();
-                            System.out.println(value);
+                            //System.out.println(value);
                             if (value) {
-                                System.out.println("test 1");
+                                //System.out.println("test 1");
                                 postanskiBrojField.getStyleClass().removeAll("poljeNijeIspravno");
                                 postanskiBrojField.getStyleClass().add("poljeIspravno");
                             } else {

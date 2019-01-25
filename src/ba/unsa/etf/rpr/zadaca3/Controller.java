@@ -114,7 +114,16 @@ public class Controller implements Initializable {
                 return;
             }
             Vlasnik vlasnik = (Vlasnik) tabelaVlasnici.getSelectionModel().getSelectedItem();
-            dao.obrisiVlasnika(vlasnik);
+            try {
+                dao.obrisiVlasnika(vlasnik);
+            }
+            catch (Exception ex) {
+                Alert alertError = new Alert(Alert.AlertType.ERROR);
+                alertError.setHeaderText("Brisanje vlasnika");
+                alertError.setContentText(ex.getMessage());
+                alertError.showAndWait();
+                return;
+            }
         } else {
             // ... user chose CANCEL or closed the dialog
         }
@@ -195,6 +204,7 @@ public class Controller implements Initializable {
             // ... user chose CANCEL or closed the dialog
         }
         tabelaVlasnici.setItems(dao.getVlasnici());
+        tabelaVozila.setItems(dao.getVozila());
     }
 
     public void editVozilo(ActionEvent actionEvent) {
