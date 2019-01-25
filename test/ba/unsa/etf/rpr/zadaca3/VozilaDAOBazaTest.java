@@ -46,7 +46,10 @@ class VozilaDAOBazaTest {
         assertEquals(1, vlasnici.size());
         assertEquals("Meho", vlasnici.get(0).getIme());
         assertEquals("Mehaga", vlasnici.get(0).getImeRoditelja());
-        assertEquals(LocalDate.of(1970,1,2), vlasnici.get(0).getDatumRodjenja());
+        // U bazi je ovaj datum sacuvan kao Unix vrijeme 82800000
+        // Prema https://www.epochconverter.com/ to je Wednesday, August 16, 1972 8:00:00 AM
+        // A ne 2.1.1970.
+        assertEquals(LocalDate.of(1972,8,16), vlasnici.get(0).getDatumRodjenja());
         assertEquals("Sarajevo", vlasnici.get(0).getMjestoRodjenja().getNaziv());
         assertEquals("Zmaja od Bosne bb", vlasnici.get(0).getAdresaPrebivalista());
         assertEquals("Sarajevo", vlasnici.get(0).getMjestoPrebivalista().getNaziv());

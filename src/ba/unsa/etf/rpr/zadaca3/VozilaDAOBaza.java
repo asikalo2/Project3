@@ -129,7 +129,7 @@ public class VozilaDAOBaza implements VozilaDAO {
         ArrayList<Proizvodjac> res = new ArrayList<>();
         try {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM proizvodjac " +
-                    "ORDER BY naziv DESC");
+                    "ORDER BY naziv ASC");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Proizvodjac m = new Proizvodjac(rs.getInt(1), rs.getString(2));
