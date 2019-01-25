@@ -201,7 +201,7 @@ public class VoziloEditTest {
         //Provjeravamo da li je BMW zaista dodat u proizodjace
         ObservableList<Proizvodjac> proizvodjaci = dao.getProizvodjaci();
         assertEquals(4, proizvodjaci.size());
-        assertEquals(4, proizvodjaci.get(3).getId());
-        assertEquals("BMW", proizvodjaci.get(3).getNaziv());
+        assertEquals(4, proizvodjaci.get(0).getId());
+        assertEquals("BMW", proizvodjaci.get(0).getNaziv());
     }
 }
